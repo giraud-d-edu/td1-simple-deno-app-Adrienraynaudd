@@ -25,8 +25,10 @@ export class BookController {
 
   static async create(ctx: Context) {
     try {
-      const book = await ctx.request.json();
-      const newBook = service.createBook(book);
+      const body = await ctx.request.body.json();
+      const value =  body.value;
+      const newBook = service.createBook(body);
+
       ctx.response.status = 201;
       ctx.response.body = newBook;
     } catch (error) {
@@ -46,8 +48,8 @@ export class BookController {
       ctx.response.body = { message: "Livre non trouvé" };
       return;
     }
-    const book = await ctx.request.json();
-    const updatedBook = service.updateBook(id, bookData);
+    const body = await ctx.request.body.json();
+    const updatedBook = service.updateBook(id, body);
 
     if (updatedBook) {
       ctx.response.body = updatedBook;

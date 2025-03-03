@@ -15,6 +15,7 @@ export class BookRepository {
   }
 
   add(book: Book): Book {
+    console.log(book);
     book.id = books.length ? books[books.length - 1].id + 1 : 1;
     books.push(book);
     return book;
@@ -23,10 +24,18 @@ export class BookRepository {
   update(id: number, updatedBook: Partial<Book>): Book | null {
     const index = books.findIndex(book => book.id === id);
     if (index === -1) return null;
-
-    books[index] = { ...books[index], ...updatedBook };
+  
+    // Créez une copie en profondeur si nécessaire
+    const updatedBookDetails = { ...books[index], ...updatedBook };
+    console.log(updatedBook);
+    // Vous pouvez aussi manipuler plus finement certaines propriétés ici, si besoin
+  
+    books[index] = updatedBookDetails;
+  
     return books[index];
   }
+  
+  
 
   delete(id: number): boolean {
     const index = books.findIndex(book => book.id === id);
